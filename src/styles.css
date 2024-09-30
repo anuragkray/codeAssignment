@@ -66,3 +66,56 @@
   margin: 0 -10px;
   max-width: 500px;
 }
+//Assignment for Second
+/* TodoApp.css */
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.todo-column,
+.completed-column {
+  width: 45%;
+}
+
+h2 {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  margin: 5px 0;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.add-task {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="text"] {
+  width: 200px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
