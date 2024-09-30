@@ -1,10 +1,10 @@
 import "./styles.css";
 import { useState, useEffect, useMemo } from "react";
-
-export default function ToDoApp() {
+export default function App() {
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
-
+  const [editID, setEditID] = useState(null);
+  
   //Fetching API
   useEffect(() => {
     (async function fetchData() {
@@ -30,10 +30,19 @@ export default function ToDoApp() {
 
   //Handle Add Task button
   const handleAddTask = () => {
-    setData((prevData) => [
-      ...prevData,
-      { id: Date.now(), todo: input, userId: "", completed: false },
-    ]);
+    if (editID) {
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === editID ? { ...item, todo: input } : item
+        )
+      );
+      setEditID(null);
+    } else {
+      setData((prevData) => [
+        ...prevData,
+        { id: Date.now(), todo: input, userId: "", completed: false },
+      ]);
+    }
     setInput("");
   };
 
@@ -44,6 +53,13 @@ export default function ToDoApp() {
         item.id === id ? { ...item, completed: !item.completed } : item
       )
     );
+  };
+  
+  //handle Edit
+  const handleEdit = (id) => {
+    const result = data.find((item) => item.id === id);
+    setInput(result.todo);
+    setEditID(id);
   };
 
   //For completed section
@@ -93,6 +109,7 @@ export default function ToDoApp() {
                     checked={item.completed}
                   />
                   {item.todo}
+                  <button onClick={() => handleEdit(item.id)}>Edit</button>
                   <button onClick={() => handleDelete(item.id)}>Delete</button>
                 </li>
               ))}
@@ -105,6 +122,7 @@ export default function ToDoApp() {
           id="new-task"
           placeholder="Enter new task"
           onChange={handleInput}
+          value={input}
         />
         <button onClick={handleAddTask}>Add Task</button>
       </div>
